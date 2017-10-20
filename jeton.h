@@ -1,23 +1,44 @@
+typedef enum{
+    REAL, OPERATOR, FUNCT, ERROR, END, PAR_OP, PAR_CL, VAR, BAR_OP, BAR_CL, ABS
+}typeLexem;
+
+
+typedef enum{
+    PLUS, MINUS, MULTIP, DIV, POW
+}typeOperator;
+
+
+typedef enum{
+    SIN, COS, TAN, SQRT, ABS, LOG, EXP, INT, VAL_NEG, SINC
+}typeFunction;
+
+
+typedef union{
+    float real;
+    typeFunction funct;
+    typeOperator ope;
+    typeError err;
+}typeValor;
+
+
 typedef struct{
     typeLexem lexem;
     typeValor valor;
 }typeToken;
 
-typedef enum{
-    REAL, FUNCT, [...];
-}typeLexem;
 
-typedef enum{
-    PLUS, MINUS, MULTIP, DIV;
-}typeOperator;
+// Tree's declaration
+typedef struct Node{
+    typeToken tok;
+    struct Node *pTokBfor;
+    struct Node *pTokNext;
+}Node;
 
-typedef enum{
-    SIN, COS, TAN, SQRT;
-}typeFunction;
 
-typedef union{
-    float real;
-    typeOperator ope;
-    typeFunction funct;
-    typeError err;
-}typeValor;
+typedef Node *Tree;
+
+
+typedef struct Result{
+    float value;
+    char[100] error;
+}
