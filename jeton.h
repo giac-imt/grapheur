@@ -12,6 +12,10 @@ typedef enum{
     SIN, COS, TAN, SQRT, ABS, LOG, EXP, INT, VAL_NEG, SINC
 }typeFunction;
 
+typedef struct{
+    int code;
+    char message[100];
+}typeError;
 
 typedef union{
     float real;
@@ -40,5 +44,5 @@ typedef Node *Tree;
 
 typedef struct Result{
     float value;
-    char[100] error;
-}
+    typeError err;
+}Result;

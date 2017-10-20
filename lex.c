@@ -2,9 +2,8 @@
 #include <stdlib.h>
 
 #include "lex.h"
-#include "jeton.h"
-
-/*int lex(char[], typeToken t[]){
+/*
+int lex(char str[], typeToken t[]){
     int i=0;
     while(str[i] != '\0'){
         switch(str[i]){
@@ -21,4 +20,6 @@
             }
         }
     }
-}*/
+}
+*/
+
