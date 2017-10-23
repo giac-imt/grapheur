@@ -5,6 +5,11 @@
 
 #include "eval.h"
 
+/** ERROR CODES
+300 : no error
+310 : division by 0
+311 : invalid OPERATOR
+**/
 Result eval(Tree *tree, float x)
 {
     typeToken token = (*tree)->tok;
@@ -43,62 +48,103 @@ Result eval(Tree *tree, float x)
                 break;
 
             case DIV:
-                res = tmpPrev.value / tmpNext.value;
-                //ATTENTION DIIVISION PAR 0
+                if(tmpNext.value != 0)
+                {
+                    res = tmpPrev.value / tmpNext.value;
+                }
+                else
+                {
+                    res = 0;
+                    err.code = 310;
+                }
                 break;
 
             case POW:
                 res = powf(tmpPrev.value,tmpNext.value);
                 break;
+            default:
+                res = 0;
+                err.code = 311;
+                sprintf(err.message, "Invalid OPERATOR : %d", token.value.ope);
+                break;
+            }
+        }
+        else
+        {
+            if(tmpPrev.err.code != 300)
+            {
+                err = tmpPrev.err;
+            }
+            else
+            {
+                err = tmpNext.err;
             }
         }
         break;
 
     case FUNCT:
-        switch(token.value.funct)
+        ;
+        tmpPrev = eval(&fPrev, x);
+        tmpNext = eval(&fNext, x);
+        if(tmpPrev.err.code == 300  && tmpNext.err.code == 300)
         {
-        case SIN:
-            break;
+            switch(token.value.funct)
+            {
+            case SIN:
+                break;
 
-        case COS:
-            break;
+            case COS:
+                break;
 
-        case TAN:
-            break;
+            case TAN:
+                break;
 
-        case SQRT:
-            break;
+            case SQRT:
+                break;
 
-        case ABS:
-            break;
+            case ABS:
+                break;
 
-        case LOG:
-            break;
+            case LOG:
+                break;
 
-        case EXP:
-            break;
+            case EXP:
+                break;
 
-        case INT:
-            break;
+            case INT:
+                break;
 
-        case VAL_NEG:
-            break;
+            case VAL_NEG:
+                break;
 
-        case SINC:
-            break;
+            case SINC:
+                break;
+            }
+        }
+        else
+        {
+            if(tmpPrev.err.code != 300)
+            {
+                err = tmpPrev.err;
+            }
+            else
+            {
+                err = tmpNext.err;
+            }
         }
         break;
 
     case ERROR:
-
+        err = token.value.err;
         break;
 
     case VAR:
-
+        res = x;
         break;
 
     default:
-        //Sortir une erreur
+        err.code = 312;
+        sprintf(err.message, "invalid Lexem");
         break;
     }
 
