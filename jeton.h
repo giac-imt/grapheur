@@ -27,7 +27,7 @@ typedef union{
 
 typedef struct{
     typeLexem lexem;
-    typeValor value;
+    typeValor valor;
 }typeToken;
 
 
