@@ -31,6 +31,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="eval.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="eval.h" />
+		<Unit filename="jeton.h" />
+		<Unit filename="lex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lex.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

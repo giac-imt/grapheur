@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "eval.h"
@@ -11,6 +12,9 @@ Result eval(Tree *tree, float x)
     Tree fNext = (*tree)->pTokNext;
 
     float res;
+    typeError err;
+    err.code = 300;
+    strcpy(err.message,"");
 
     switch(token.lexem)
     {
@@ -18,11 +22,13 @@ Result eval(Tree *tree, float x)
         res = token.value.real;
         break;
 
-    case OPERATOR: ;
-        Result tmpPrev = eval(fPrev, x);
-        Result tmpNext = eval(fNext, x);
-
-        switch(token.value.ope)
+    case OPERATOR:
+        ;
+        Result tmpPrev = eval(&fPrev, x);
+        Result tmpNext = eval(&fNext, x);
+        if(tmpPrev.err.code == 300  && tmpNext.err.code == 300)
+        {
+            switch(token.value.ope)
             {
             case PLUS:
                 res = tmpPrev.value + tmpNext.value;
@@ -45,41 +51,42 @@ Result eval(Tree *tree, float x)
                 res = powf(tmpPrev.value,tmpNext.value);
                 break;
             }
+        }
         break;
 
     case FUNCT:
         switch(token.value.funct)
-            {
-            case SIN:
-                break;
+        {
+        case SIN:
+            break;
 
-            case COS:
-                break;
+        case COS:
+            break;
 
-            case TAN:
-                break;
+        case TAN:
+            break;
 
-            case SQRT:
-                break;
+        case SQRT:
+            break;
 
-            case ABS:
-                break;
+        case ABS:
+            break;
 
-            case LOG:
-                break;
+        case LOG:
+            break;
 
-            case EXP:
-                break;
+        case EXP:
+            break;
 
-            case INT:
-                break;
+        case INT:
+            break;
 
-            case VAL_NEG:
-                break;
+        case VAL_NEG:
+            break;
 
-            case SINC:
-                break;
-            }
+        case SINC:
+            break;
+        }
         break;
 
     case ERROR:
@@ -94,4 +101,9 @@ Result eval(Tree *tree, float x)
         //Sortir une erreur
         break;
     }
+
+    Result ret;
+    ret.value = res;
+    ret.err = err;
+    return ret;
 }
