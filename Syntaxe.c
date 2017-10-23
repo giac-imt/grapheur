@@ -42,11 +42,13 @@ Tree Synt(typeToken t[], int * i)
 			{
 			
 				printf("Je suis dans func\n");
-				*i = *i + 2;
-				tmp = Synt(t, i);
+				
+				int * tmp_var = i;
+				
+				*tmp_var = *tmp_var + 2;
+				tmp = Synt(t, tmp_var);
 				
 				arbre = creerNode(t[*i], tmp, NULL);
-				
 				
 				break;
 			}
@@ -66,6 +68,7 @@ Tree Synt(typeToken t[], int * i)
 		}
 		(*i)++;
 	}
-	
+			printf(" en dehors du while: i vauts: %d\n", *i);
+		printf(" en dehors du while: Le lexem vaut %d\n", t[*i].lexem);
 	return arbre;
 }
