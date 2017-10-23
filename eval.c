@@ -10,7 +10,7 @@
 310 : division by 0
 311 : invalid OPERATOR
 **/
-Result eval(Tree *tree, float x)
+Result Eval(Tree *tree, float x)
 {
     typeToken token = (*tree)->tok;
     Tree fPrev = (*tree)->pTokBfor;
@@ -91,15 +91,19 @@ Result eval(Tree *tree, float x)
             switch(token.value.funct)
             {
             case SIN:
+                res = sinf(token.value.real);
                 break;
 
             case COS:
+                res = cosf(token.value.real);
                 break;
 
             case TAN:
+                res = tanf(token.value.real);
                 break;
 
             case SQRT:
+                res = sqrtf(token.value.real);
                 break;
 
             case ABS:
