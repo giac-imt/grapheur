@@ -69,5 +69,4 @@ int main()
 	Tree arbre = Synt(t, i);
 
 	return 0;
->>>>>>> Syntaxe
 }

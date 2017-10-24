@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 typedef enum{
     REAL, OPERATOR, FUNCT, ERROR, END, PAR_OP, PAR_CL, VAR, BAR_OP, BAR_CL, ABSOLUTE
 }typeLexem;
