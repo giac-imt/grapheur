@@ -1,4 +1,3 @@
-#include "jeton.h"
 #include "lex.h"
 
 Tree Synt(typeToken t[], int * i);

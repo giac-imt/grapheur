@@ -18,14 +18,16 @@ Result Eval(Tree *tree, float x)
     err.code = 300;
     strcpy(err.message,"");
 
-    if(tree != NULL)
+    if(*tree != NULL)
     {
         typeToken token = (*tree)->tok;
         Tree fPrev = (*tree)->pTokBfor;
         Tree fNext = (*tree)->pTokNext;
-        
+
         Result tmpPrev = Eval(&fPrev, x);
         Result tmpNext = Eval(&fNext, x);
+
+        printf("LEXEM : %d\n", token.lexem);
 
         switch(token.lexem)
         {
@@ -145,6 +147,10 @@ Result Eval(Tree *tree, float x)
                 }
             }
             break;
+
+                case END:
+
+                    break;
 
         case ERROR:
             err = token.value.err;

@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Syntaxe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Syntaxe.h" />
 		<Unit filename="eval.c">
 			<Option compilerVar="CC" />
 		</Unit>

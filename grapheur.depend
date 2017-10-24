@@ -1,31 +1,34 @@
 # depslib dependency file v1.0
-1508750967 source:c:\users\toto\documents\github\grapheur\eval.c
+1508859538 source:c:\users\toto\documents\github\grapheur\eval.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	<math.h>
 	"eval.h"
 
-1508750967 c:\users\toto\documents\github\grapheur\eval.h
-	"jeton.h"
+1508858659 c:\users\toto\documents\github\grapheur\eval.h
+	"Syntaxe.h"
 
-1508750967 c:\users\toto\documents\github\grapheur\jeton.h
+1508858253 c:\users\toto\documents\github\grapheur\jeton.h
 
-1508750967 source:c:\users\toto\documents\github\grapheur\lex.c
+1508858253 source:c:\users\toto\documents\github\grapheur\lex.c
 	<stdio.h>
 	<stdlib.h>
 	"lex.h"
 
-1508750967 c:\users\toto\documents\github\grapheur\lex.h
-
-1508750967 source:c:\users\toto\documents\github\grapheur\main.c
-	<stdio.h>
-	<stdlib.h>
-	"lex.h"
+1508858540 c:\users\toto\documents\github\grapheur\lex.h
 	"jeton.h"
-	"lex.c"
+
+1508859842 source:c:\users\toto\documents\github\grapheur\main.c
+	<stdlib.h>
+	<stdio.h>
+	"eval.h"
 
 1508750967 c:\users\toto\documents\github\grapheur\lex.c
 	<stdio.h>
 	<stdlib.h>
+	"lex.h"
+
+1508858668 c:\users\toto\documents\github\grapheur\syntaxe.h
 	"lex.h"
 
