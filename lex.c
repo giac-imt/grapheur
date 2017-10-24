@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "lex.h"
 
+char functions[10][7] = {"ABS", "COS", "EXP", "INT", "LOG", "SIN", "SINC", "SQRT", "TAN", "VAL_NEG"};
+
 int lex(char str[], typeToken t[]){
     //i avance dans la saisie user, j dans le tableau typeToken
-    int i=0, j= 0;
-
-    //Différencier la barre ouvrante de la barre fermante
-    int barre = 0;
+    int i = 0, j = 0;
 
     while(str[i] != '\0'){
-        switch(str[i]){
+        switch(tolower(str[i])){
 
             case '+' :
                 t[j].lexem = OPERATOR;
@@ -47,14 +47,13 @@ int lex(char str[], typeToken t[]){
                 t[j].lexem = PAR_CL;
                 break;
 
-            case '|' :
-                if(barre == 0){
-                    t[j].lexem = BAR_OP;
-                    barre = 1;
-                } else {
-                    t[j].lexem = BAR_CL;
-                    barre = 0;
-                }
+                // Les BAR correspondent Ã  des crochets
+            case '[' :
+                t[j].lexem = BAR_OP;
+                break;
+
+            case ']' :
+                t[j].lexem = BAR_CL;
                 break;
 
             case 'x' :
@@ -62,17 +61,17 @@ int lex(char str[], typeToken t[]){
                 break;
 
             default :
-                if((str[i]>'a') && (str[i]<'z')){
-                    //Impossible de rentrer dans ce if
-                    printf("Alphabet\n");
+                if(((str[i]>'a') && (str[i]<'z')) || ((str[i]>'A') && (str[i]<'Z'))){
+                    t[j].lexem = FUNCT;
+// FAIRE KE RESTE DU CODE ICI T__T
                 }
-                if((str[i]>'0') && (str[i]<'9')){
-                    //Ni dans celui-là
+                else if((str[i]>'0') && (str[i]<'9')){
+                    t[j].lexem = REAL;
                 }
                 else {
                     t[j].lexem = ERROR;
                     t[j].valor.err.code = 101;
-                    sprintf(t[j].valor.err.message, "Aucune correspondance trouvée\n");
+                    sprintf(t[j].valor.err.message, "Aucune correspondance trouvee\n");
                 }
                 break;
         }
@@ -82,6 +81,20 @@ int lex(char str[], typeToken t[]){
     t[j].lexem = END;
     t[j].valor.err.code = 100;
     sprintf(t[j].valor.err.message, "Success\n");
+
     return 0;
 }
 
+void retirer_caracteres_blancs(char chaine[], char copy[]){
+    int i,j = 0, lg;
+    lg = strlen(chaine);
+    for(i=0; i<lg; i++)
+    {
+        if(chaine[i] != ' ' && chaine[i] != '\t')
+        {
+            copy[j] = chaine[i];
+            j++;
+        }
+    }
+    copy[j] == '\0';
+}
