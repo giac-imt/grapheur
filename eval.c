@@ -12,7 +12,7 @@
 **/
 Result Eval(Tree *tree, float x)
 {
-
+    //Variable unique pour le retour, utiliser res
     float res;
     typeError err;
     err.code = 300;
@@ -23,6 +23,9 @@ Result Eval(Tree *tree, float x)
         typeToken token = (*tree)->tok;
         Tree fPrev = (*tree)->pTokBfor;
         Tree fNext = (*tree)->pTokNext;
+        
+        Result tmpPrev = Eval(&fPrev, x);
+        Result tmpNext = Eval(&fNext, x);
 
         switch(token.lexem)
         {
@@ -31,9 +34,6 @@ Result Eval(Tree *tree, float x)
             break;
 
         case OPERATOR:
-            ;
-            Result tmpPrev = Eval(&fPrev, x);
-            Result tmpNext = Eval(&fNext, x);
             if(tmpPrev.err.code == 300  && tmpNext.err.code == 300)
             {
                 switch(token.value.ope)
@@ -68,7 +68,7 @@ Result Eval(Tree *tree, float x)
                 default:
                     res = 0;
                     err.code = 311;
-                    sprintf(err.message, "Invalid OPERATOR : %d", token.value.ope);
+                    sprintf(err.message, "Err 311 : Invalid OPERATOR : %d", token.value.ope);
                     break;
                 }
             }
@@ -86,50 +86,47 @@ Result Eval(Tree *tree, float x)
             break;
 
         case FUNCT:
-            ;
-            tmpPrev = Eval(&fPrev, x);
-            tmpNext = Eval(&fNext, x);
             if(tmpPrev.err.code == 300  && tmpNext.err.code == 300)
             {
                 switch(token.value.funct)
                 {
                 case SIN:
-                    res = sinf(token.value.real);
+                    res = sinf(tmpPrev.value);
                     break;
 
                 case COS:
-                    res = cosf(token.value.real);
+                    res = cosf(tmpPrev.value);
                     break;
 
                 case TAN:
-                    res = tanf(token.value.real);
+                    res = tanf(tmpPrev.value);
                     break;
 
                 case SQRT:
-                    res = sqrtf(token.value.real);
+                    res = sqrtf(tmpPrev.value);
                     break;
 
                 case ABS:
                     if(token.value.real < 0)
-                        res = - token.value.real;
+                        res = - tmpPrev.value;
                     else
-                        res = token.value.real;
+                        res = tmpPrev.value;
                     break;
 
                 case LOG:
-                    res = logf(token.value.real);
+                    res = logf(tmpPrev.value);
                     break;
 
                 case EXP:
-                    res = expf(token.value.real);
+                    res = expf(tmpPrev.value);
                     break;
 
                 case INT:
-                    res = (float)(int)token.value.real;
+                    res = (float)(int)tmpPrev.value;
                     break;
 
                 case VAL_NEG:
-                    res = - token.value.real;
+                    res = - tmpPrev.value;
                     break;
 
                 case SINC:
@@ -159,14 +156,14 @@ Result Eval(Tree *tree, float x)
 
         default:
             err.code = 312;
-            sprintf(err.message, "invalid Lexem");
+            sprintf(err.message, "Err 312 : Invalid Lexem");
             break;
         }
     }
     else
     {
         err.code = 301;
-        sprintf(err.message,"Null token");
+        sprintf(err.message,"Err 301 : Null Token");
     }
 
     Result ret;
