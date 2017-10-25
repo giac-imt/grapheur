@@ -47,7 +47,7 @@ int lex(char str[], typeToken t[]){
                 t[j].lexem = PAR_CL;
                 break;
 
-                // Les BAR correspondent à des crochets
+            // Les BAR correspondent à des crochets
             case '[' :
                 t[j].lexem = BAR_OP;
                 break;
@@ -63,10 +63,18 @@ int lex(char str[], typeToken t[]){
             default :
                 if(((str[i]>'a') && (str[i]<'z')) || ((str[i]>'A') && (str[i]<'Z'))){
                     t[j].lexem = FUNCT;
-// FAIRE KE RESTE DU CODE ICI T__T
+                    // FAIRE LE RESTE DU CODE ICI T__T
                 }
-                else if((str[i]>'0') && (str[i]<'9')){
+                else if((str[i]>='0') && (str[i]<='9')){
+                    int ind = 0;
+                    char tmp[20];
+                    while(isdigit(str[i]) != 0){
+                        tmp[ind] = str[i];
+                        ind++;
+                        i++;
+                    }
                     t[j].lexem = REAL;
+                    t[j].valor.real = atoi(tmp);
                 }
                 else {
                     t[j].lexem = ERROR;
@@ -85,7 +93,7 @@ int lex(char str[], typeToken t[]){
     return 0;
 }
 
-void retirer_caracteres_blancs(char chaine[], char copy[]){
+void removeWhiteSpaces(char chaine[], char copy[]){
     int i,j = 0, lg;
     lg = strlen(chaine);
     for(i=0; i<lg; i++)
