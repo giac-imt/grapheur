@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1508859538 source:c:\users\toto\documents\github\grapheur\eval.c
+1508920233 source:c:\users\toto\documents\github\grapheur\eval.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -19,7 +19,7 @@
 1508858540 c:\users\toto\documents\github\grapheur\lex.h
 	"jeton.h"
 
-1508859842 source:c:\users\toto\documents\github\grapheur\main.c
+1508920477 source:c:\users\toto\documents\github\grapheur\main.c
 	<stdlib.h>
 	<stdio.h>
 	"eval.h"
@@ -31,4 +31,9 @@
 
 1508858668 c:\users\toto\documents\github\grapheur\syntaxe.h
 	"lex.h"
+
+1508917831 source:c:\users\toto\documents\github\grapheur\syntaxe.c
+	<stdlib.h>
+	<stdio.h>
+	"Syntaxe.h"
 

@@ -88,7 +88,7 @@ Result Eval(Tree *tree, float x)
             break;
 
         case FUNCT:
-            if(tmpPrev.err.code == 300  && tmpNext.err.code == 300)
+            if(tmpPrev.err.code == 300)
             {
                 switch(token.value.funct)
                 {

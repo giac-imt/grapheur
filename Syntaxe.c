@@ -57,11 +57,11 @@ Tree Synt(typeToken t[], int * i)
 			{
 				printf("Je suis dans operator\n");
 
-				int * tmp_var = i;
+				int tmp_var = *i;
 
-				*tmp_var += 1;
+				tmp_var += 1;
 
-				return creerNode(t[*i], arbre, Synt(t, tmp_var));
+				return creerNode(t[*i], arbre, Synt(t, &tmp_var));
 
 				break;
 			}
