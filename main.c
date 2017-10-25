@@ -1,83 +1,160 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <SDL2\SDL.h>
+#include <math.h>
+#include <windows.h>
 
-#include "eval.h"
+#define NBPOINTS 5000
+//#define RESIZER_MULTIPLIER 80 //Taille du graphe qui pourrait etre donnee par l'utilisateur
+#define PRECISION 100.0
+#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 600
 
-int main()
+
+int RESIZER_MULTIPLIER[4] = {10,50,100,150}; // proposer 10 50 100 150 (au hasard)
+
+float *point(float pointResult[3][NBPOINTS])
 {
-	typeToken t[18];
+    int j;
+    for(j=0;j<NBPOINTS;j++){
+        pointResult[0][j]=(j/PRECISION);
+        pointResult[1][j]=cos(j/PRECISION);
+        pointResult[2][j]=0;
+        }
+    return pointResult;
+}
 
-	t[0].lexem = PAR_OP;
-	t[0].value.real = 0;
+float *pointNeg(float pointResult[3][NBPOINTS])
+{
+    int j;
+    for(j=-NBPOINTS;j<=0;j++){
+        pointResult[0][-j]=(j/PRECISION);
+        pointResult[1][-j]=cos(j/PRECISION);
+        pointResult[2][-j]=0;
+        }
+    return pointResult;
+}
 
-	t[1].lexem = REAL;
-	t[1].value.real = 2;
 
-	t[2].lexem = PAR_CL;
-	t[2].value.real = 0;
+void fillColor(SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+}
 
-	t[3].lexem = OPERATOR;
-	t[3].value.ope = PLUS;
+void drawAxes(SDL_Renderer* renderer, SDL_Window *screen)
+{
+    SDL_RenderDrawLine(renderer,0, WINDOW_WIDTH/2 , SDL_GetWindowSurface(screen)->w, WINDOW_HEIGHT/2);//axe vertical
+    SDL_RenderDrawLine(renderer,WINDOW_HEIGHT/2,0,WINDOW_WIDTH/2,SDL_GetWindowSurface(screen)->h); //axe horizontal
+}
+void drawTransGrid(SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawColor(renderer,30,30,30,255);
+    float centerCoordX=WINDOW_WIDTH/2;
+    float centerCoordY=WINDOW_HEIGHT/2;
+    float GridBarCounts=(WINDOW_WIDTH-centerCoordX)/ *RESIZER_MULTIPLIER;
+    int i;
+    for(i=0;i<GridBarCounts;i++){
+            SDL_RenderDrawLine(renderer,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,WINDOW_HEIGHT,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,0);//axe x positif
+            SDL_RenderDrawLine(renderer,-i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,WINDOW_HEIGHT,-i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,0);//axe x negatif
+            SDL_RenderDrawLine(renderer,0,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,WINDOW_WIDTH,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2);//axe y negatif
+            SDL_RenderDrawLine(renderer,0,i* *RESIZER_MULTIPLIER,WINDOW_WIDTH,i* *RESIZER_MULTIPLIER);//axe y positif
+        }
+}
 
-	t[4].lexem = FUNCT;
-	t[4].value.funct = SIN;
+void drawGrid(SDL_Renderer* renderer)
+{
+    float centerCoordX=WINDOW_WIDTH/2;
+    float centerCoordY=WINDOW_HEIGHT/2;
+    float GridBarCounts=(WINDOW_WIDTH-centerCoordX)/ *RESIZER_MULTIPLIER;
+    int i;
+    for(i=0;i<GridBarCounts;i++){
+            SDL_RenderDrawLine(renderer,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,(-*RESIZER_MULTIPLIER/10)+centerCoordY,i* *RESIZER_MULTIPLIER+WINDOW_WIDTH/2,( *RESIZER_MULTIPLIER/10)+centerCoordY);//axe x positif
+            SDL_RenderDrawLine(renderer,i* *RESIZER_MULTIPLIER,(- *RESIZER_MULTIPLIER/10)+centerCoordY,i* *RESIZER_MULTIPLIER,(*RESIZER_MULTIPLIER/10)+centerCoordY);// axe x negatif
+            SDL_RenderDrawLine(renderer,-1*(*RESIZER_MULTIPLIER/10)+centerCoordX,i* *RESIZER_MULTIPLIER,1*(*RESIZER_MULTIPLIER/10)+centerCoordX,i* *RESIZER_MULTIPLIER);
+            SDL_RenderDrawLine(renderer,-1*(*RESIZER_MULTIPLIER/10)+centerCoordX,i* *RESIZER_MULTIPLIER+centerCoordY,1*(*RESIZER_MULTIPLIER/10)+centerCoordX,i* *RESIZER_MULTIPLIER+centerCoordY);
+        }
+}
 
-	t[5].lexem = PAR_OP;
-	t[5].value.real = 0;
+void drawCurv2(SDL_Renderer* renderer,float point[3][NBPOINTS], SDL_Window* screen)
+{
+    int i;
+    for(i=0;i<NBPOINTS;i++){
+            SDL_RenderDrawPoint(renderer,(point[0][i] * *RESIZER_MULTIPLIER)+WINDOW_WIDTH/2,point[1][i]* *RESIZER_MULTIPLIER+(SDL_GetWindowSurface(screen)->h)/2);
+        }
+}
+void drawCurv2Neg(SDL_Renderer* renderer,float points[3][NBPOINTS], SDL_Window* screen)
+{
+    int i;
+    for(i=0;i>=-NBPOINTS;i--){
+        SDL_RenderDrawPoint(renderer,(points[0][-i] * *RESIZER_MULTIPLIER)+WINDOW_WIDTH/2,points[1][-i]* *RESIZER_MULTIPLIER+(SDL_GetWindowSurface(screen)->h)/2);
+    }
 
-	t[6].lexem = REAL;
-	t[6].value.real = 3;
+}
 
-	t[7].lexem = OPERATOR;
-	t[7].value.ope = PLUS;
+void drawEverything2(SDL_Renderer* renderer, SDL_Window* screen,float point[3][NBPOINTS],float points[3][NBPOINTS] )
+{
+    fillColor(renderer);
+    drawAxes(renderer,screen);
+    drawGrid(renderer);
+    drawCurv2(renderer,point,screen);
+    drawCurv2Neg(renderer,points,screen);
+}
 
-	t[8].lexem = PAR_OP;
-	t[8].value.real = 0;
+void resetRenderer(SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawColor(renderer,0,0,0,0);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+}
 
-	t[9].lexem = FUNCT;
-	t[9].value.funct = COS;
+void nextZoomLevel(int Resize_index)
+{
+    *RESIZER_MULTIPLIER=RESIZER_MULTIPLIER[Resize_index];
+}
 
-	t[10].lexem = PAR_OP;
-	t[10].value.real = 0;
-
-	t[11].lexem = VAR;
-	t[11].value.real = 0;
-
-	t[12].lexem = OPERATOR;
-	t[12].value.ope = MULTIP;
-
-	t[13].lexem = REAL;
-	t[13].value.real = 6;
-
-	t[14].lexem = PAR_CL;
-	t[14].value.real = 0;
-
-	t[15].lexem = PAR_CL;
-	t[15].value.real = 0;
-
-	t[16].lexem = PAR_CL;
-	t[16].value.real = 0;
-
-	t[17].lexem = END;
-	t[17].value.real = 0;
-
-	int y = 0;
-
-	int * i = &y;
-
-	Tree arbre = Synt(t, i);
-
-	printf("Arbre: %d", arbre->pTokNext->tok.lexem);
-
-	printf("Premier Lexem : %d\n", arbre->tok.lexem);
-
-	// Après le Synt(), l'arbre est mal situé
-
-    Result res = Eval(&arbre,-7.5);
-
-	printf("f(1) = %f",res.value);
-
-	free(arbre);
-
-	return 0;
+int main(int argc, char *argv[])
+{
+    float points[NBPOINTS];
+    float pointResult[3][NBPOINTS];
+    float pointResultNeg[3][NBPOINTS];
+    SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Window* screen = SDL_CreateWindow("Drawn function", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_HEIGHT, WINDOW_WIDTH, SDL_WINDOW_SHOWN);
+    SDL_Renderer* renderer=SDL_CreateRenderer(screen,-1,0);
+    int clicked=0;
+    int repeat=0;
+    int displayed=0;
+    int Resize_index=0;
+    SDL_Event event;
+    while(!repeat){
+        SDL_PollEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                repeat=1;
+                break;
+        }
+        if(displayed==0){
+            drawTransGrid(renderer);
+            drawEverything2(renderer,screen,pointResult,pointResultNeg);
+            point(pointResult);
+            pointNeg(pointResultNeg);
+            displayed=1;
+        }
+        if(SDL_GetMouseState(NULL, NULL) && SDL_BUTTON(SDL_BUTTON_LEFT))
+            clicked=1;
+        if(clicked && displayed){
+            nextZoomLevel(Resize_index);
+            drawEverything2(renderer,screen,pointResult,pointResultNeg);
+            resetRenderer(renderer);
+            displayed=0;
+            clicked=0;
+            Resize_index++;
+            if(Resize_index==4)
+            Resize_index=0;
+            Sleep(200);
+            }
+        SDL_RenderPresent(renderer);
+        }
+    SDL_DestroyWindow(screen);
+    return 0;
 }
