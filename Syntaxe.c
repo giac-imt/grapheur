@@ -44,7 +44,7 @@ Tree Synt(typeToken t[], int * i)
 				printf("Je suis dans func\n");
 
 				int tmp_var = *i;
-                int tmpp_var = *i;
+                		int tmpp_var = *i;
 
 				tmp_var = tmp_var + 2;
 				tmp = Synt(t, &tmp_var);
