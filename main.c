@@ -71,9 +71,9 @@ int main()
 
 	printf("Premier Lexem : %d\n", arbre->tok.lexem);
 
-	// Après le Synt(), l'arbre est mal situé
+	// AprÃ¨s le Synt(), l'arbre est mal situÃ©
 
-    Result res = Eval(&arbre,-7.5);
+    	Result res = Eval(&arbre,-7.5);
 
 	printf("f(1) = %f",res.value);
 
