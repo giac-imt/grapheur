@@ -17,4 +17,4 @@ void drawEverything2(SDL_Renderer* renderer, SDL_Window* screen,float point[3][N
 void resetRenderer(SDL_Renderer* renderer);
 void nextZoomLevel(int Resize_index);
 void nextStep(int step_index);
-void handleKeys(SDL_Event* event);
+void handleKeys(SDL_Event* event,SDL_Renderer *renderer,SDL_Window* screen,float point[3][NBPOINTS],float points[3][NBPOINTS]);
