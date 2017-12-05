@@ -5,83 +5,68 @@
 
 #include "lex.h"
 
-char functions[10][7] = {"ABS", "COS", "EXP", "INT", "LOG", "SIN", "SINC", "SQRT", "TAN", "VAL_NEG"};
-
-int lex(char str[], typeToken t[]){
+void lex(char str[], typeToken t[]){
     //i avance dans la saisie user, j dans le tableau typeToken
     int i = 0, j = 0;
 
     while(str[i] != '\0'){
-        switch(tolower(str[i])){
+        if(str[i] == '+'){
+            t[j].lexem = OPERATOR;
+            t[j].valor.ope = PLUS;
+        }
 
-            case '+' :
-                t[j].lexem = OPERATOR;
-                t[j].valor.ope = PLUS;
-                break;
+        else if(str[i] == '-'){
+            t[j].lexem = OPERATOR;
+            t[j].valor.ope = MINUS;
+        }
 
-            case '-' :
-                t[j].lexem = OPERATOR;
-                t[j].valor.ope = MINUS;
-                break;
+        else if(str[i] == '*'){
+            t[j].lexem = OPERATOR;
+            t[j].valor.ope = MULTIP;
+        }
 
-            case '*' :
-                t[j].lexem = OPERATOR;
-                t[j].valor.ope = MULTIP;
-                break;
+        else if(str[i] == '/'){
+            t[j].lexem = OPERATOR;
+            t[j].valor.ope = DIV;
+        }
 
-            case '/' :
-                t[j].lexem = OPERATOR;
-                t[j].valor.ope = DIV;
-                break;
+        else if(str[i] == '^'){
+            t[j].lexem = OPERATOR;
+            t[j].valor.ope = POW;
+        }
 
-            case '^' :
-                t[j].lexem = OPERATOR;
-                t[j].valor.ope = POW;
-                break;
+        else if(str[i] == '('){
+            t[j].lexem = PAR_OP;
+        }
 
-            case '(' :
-                t[j].lexem = PAR_OP;
-                break;
+        else if(str[i] == ')'){
+            t[j].lexem = PAR_CL;
+        }
 
-            case ')' :
-                t[j].lexem = PAR_CL;
-                break;
+        else if(str[i] == '['){
+            t[j].lexem = BAR_OP;
+        }
 
-            // Les BAR correspondent à des crochets
-            case '[' :
-                t[j].lexem = BAR_OP;
-                break;
+        else if(str[i] == ']'){
+            t[j].lexem = BAR_CL;
+        }
 
-            case ']' :
-                t[j].lexem = BAR_CL;
-                break;
+        else if(str[i] == 'x'){
+            t[j].lexem = VAR;
+        }
 
-            case 'x' :
-                t[j].lexem = VAR;
-                break;
+        else if(((str[i]>='a') && (str[i]<='z')) || ((str[i]>='A') && (str[i]<='Z'))){
+            t[j].lexem = FUNCT;
+        }
 
-            default :
-                if(((str[i]>'a') && (str[i]<'z')) || ((str[i]>'A') && (str[i]<'Z'))){
-                    t[j].lexem = FUNCT;
-                    // FAIRE LE RESTE DU CODE ICI T__T
-                }
-                else if((str[i]>='0') && (str[i]<='9')){
-                    int ind = 0;
-                    char tmp[20];
-                    while(isdigit(str[i]) != 0){
-                        tmp[ind] = str[i];
-                        ind++;
-                        i++;
-                    }
-                    t[j].lexem = REAL;
-                    t[j].valor.real = atoi(tmp);
-                }
-                else {
-                    t[j].lexem = ERROR;
-                    t[j].valor.err.code = 101;
-                    sprintf(t[j].valor.err.message, "Aucune correspondance trouvee\n");
-                }
-                break;
+        else if((str[i]>='0') && (str[i]<='9')){
+            t[j].lexem = REAL;
+        }
+
+        else{
+            t[j].lexem = ERROR;
+            t[j].valor.err.code = 101;
+            sprintf(t[j].valor.err.message, "Charactere non reconnu\n");
         }
         i++;
         j++;
@@ -89,8 +74,6 @@ int lex(char str[], typeToken t[]){
     t[j].lexem = END;
     t[j].valor.err.code = 100;
     sprintf(t[j].valor.err.message, "Success\n");
-
-    return 0;
 }
 
 void removeWhiteSpaces(char chaine[], char copy[]){
@@ -105,4 +88,14 @@ void removeWhiteSpaces(char chaine[], char copy[]){
         }
     }
     copy[j] == '\0';
+}
+
+int charToInt(char test[]){
+    int i = 0;
+    int result = 0;
+    int len = strlen(test);
+    for(i=0; i<len; i++){
+        result = result * 10 + ( test[i] - '0' );
+    }
+    return result;
 }
