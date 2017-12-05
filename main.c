@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "eval.h"
+//#include "eval.h"
+#include "graph.h"
 
-int main()
+int main(int argc, char **argv)
 {
 	typeToken t[18];
 
@@ -75,7 +76,11 @@ int main()
 
     	Result res = Eval(&arbre,-7.5);
 
-	printf("f(1) = %f",res.value);
+	printf("f(-7.5) = %f",res.value);
+
+    printf("JARRIVE");
+    tracer(&arbre);
+
 
 	free(arbre);
 
