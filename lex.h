@@ -3,9 +3,12 @@
 
 #include "jeton.h"
 //Transformation d'une chaine de caractère en tableau de lexem
-int lex(char str[], typeToken t[]);
+void lex(char str[], typeToken t[]);
 
 //Retirer les espaces
 void removeWhiteSpaces(char chaine[], char copy[]);
+
+//Convertir le tableau de char(int) en int [Exemple [1][2][3] -> 123]
+int charToInt(char test[]);
 
 #endif // LEXX_H_INCLUDED
