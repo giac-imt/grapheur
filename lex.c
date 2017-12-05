@@ -60,7 +60,17 @@ void lex(char str[], typeToken t[]){
         }
 
         else if((str[i]>='0') && (str[i]<='9')){
+            int ind = 0;
+            char tmp[20];
+            while(isdigit(str[i]) != 0){
+                tmp[ind] = str[i];
+                ind++;
+                i++;
+            }
+            i--;
             t[j].lexem = REAL;
+            t[j].valor.real = atoi(tmp);
+            printf("%d\n", atoi(tmp));
         }
 
         else{
