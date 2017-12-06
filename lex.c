@@ -7,7 +7,21 @@
 
 void lex(char str[], typeToken t[]){
     //i avance dans la saisie user, j dans le tableau typeToken
-    int i = 0, j = 0;
+    //errors compte les erreurs, occurence compte les occurences avec les fonctions
+    int i = 0, j = 0, errors = 0, occurence = 0;
+
+    char functions[][6] = {
+        "SIN",
+        "COS",
+        "TAN",
+        "SQRT",
+        "ABS",
+        "LOG",
+        "EXP",
+        "INT",
+        "VALNE",
+        "SINC"
+    };
 
     while(str[i] != '\0'){
         if(str[i] == '+'){
@@ -56,28 +70,63 @@ void lex(char str[], typeToken t[]){
         }
 
         else if(((str[i]>='a') && (str[i]<='z')) || ((str[i]>='A') && (str[i]<='Z'))){
-            t[j].lexem = FUNCT;
+            int ind = 0, k, l;
+            char tmp[20] = {};
+            while(isalpha(str[i])){
+                tmp[ind] = toupper(str[i]);
+                ind++;
+                i++;
+            }
+            i--;
+
+
+            for(k = 0; k < 10; k++){
+                if(strcmp(functions[k], tmp) == 0){
+                    t[j].lexem = FUNCT;
+                    t[j].valor.funct = k;
+                    occurence++;
+                    break;
+                }
+            }
+
+            if(occurence <= 0){
+                t[j].lexem = ERROR;
+                t[j].valor.err.code = 102;
+                sprintf(t[j].valor.err.message, "Chaine non reconnue\n");
+                printf("Chaine non reconnue\n");
+                errors++;
+            }
         }
 
         else if((str[i]>='0') && (str[i]<='9')){
             int ind = 0;
             char tmp[20];
-            while(isdigit(str[i]) != 0){
+            while(isdigit(str[i]) != 0 || str[i] == '.'){
                 tmp[ind] = str[i];
                 ind++;
                 i++;
             }
             i--;
+
+            //Besoin d'un pointeur pour convertir le tableau de reel a virgules en un reel
+            char* pt;
             t[j].lexem = REAL;
-            t[j].valor.real = atoi(tmp);
-            printf("%d\n", atoi(tmp));
+            t[j].valor.real = strtod(tmp, &pt);
         }
 
         else{
             t[j].lexem = ERROR;
             t[j].valor.err.code = 101;
-            sprintf(t[j].valor.err.message, "Charactere non reconnu\n");
+            sprintf(t[j].valor.err.message, "Caractere non reconnu\n");
+            printf("Caractere non reconnu\n");
+            errors++;
+            break;
         }
+
+        if(errors > 0){
+            break;
+        }
+
         i++;
         j++;
     }
@@ -100,12 +149,3 @@ void removeWhiteSpaces(char chaine[], char copy[]){
     copy[j] == '\0';
 }
 
-int charToInt(char test[]){
-    int i = 0;
-    int result = 0;
-    int len = strlen(test);
-    for(i=0; i<len; i++){
-        result = result * 10 + ( test[i] - '0' );
-    }
-    return result;
-}
