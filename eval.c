@@ -27,7 +27,7 @@ Result Eval(Tree *tree, float x)
         Result tmpPrev = Eval(&fPrev, x);
         Result tmpNext = Eval(&fNext, x);
 
-        printf("LEXEM : %d\n", token.lexem);
+        //printf("LEXEM : %d\n", token.lexem);
 
         switch(token.lexem)
         {
@@ -123,9 +123,9 @@ Result Eval(Tree *tree, float x)
                     res = expf(tmpPrev.value);
                     break;
 
-                case INT:
+                /*case INT:
                     res = (float)(int)tmpPrev.value;
-                    break;
+                    break;*/
 
                 case VAL_NEG:
                     res = - tmpPrev.value;

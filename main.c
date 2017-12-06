@@ -3,12 +3,31 @@
 
 //#include "eval.h"
 #include "graph.h"
+//#include "lex.h"
 
 int main(int argc, char **argv)
 {
-	typeToken t[18];
+	//typeToken t[18];
 
-	t[0].lexem = PAR_OP;
+	char str[20] = {'\0'};
+
+    //Tableau copie pour enlever les espaces
+    char cpy[20] = {'\0'};
+
+    //Tableau a transmettre
+    typeToken t[20] = {};
+
+    //Saisie utilisateur & retrait des espaces
+    gets(str);
+
+    //Retrait des espaces
+    removeWhiteSpaces(str, cpy);
+
+    //Definition des lexems
+    lex(cpy, t);
+
+
+	/*t[0].lexem = PAR_OP;
 	t[0].value.real = 0;
 
 	t[1].lexem = REAL;
@@ -60,7 +79,7 @@ int main(int argc, char **argv)
 	t[16].value.real = 0;
 
 	t[17].lexem = END;
-	t[17].value.real = 0;
+	t[17].value.real = 0;*/
 
 	int y = 0;
 
@@ -68,9 +87,9 @@ int main(int argc, char **argv)
 
 	Tree arbre = Synt(t, i);
 
-	printf("Arbre: %d", arbre->pTokNext->tok.lexem);
+	//printf("Arbre: %d", arbre->pTokNext->tok.lexem);
 
-	printf("Premier Lexem : %d\n", arbre->tok.lexem);
+	//printf("Premier Lexem : %d\n", arbre->tok.lexem);
 
 	// Après le Synt(), l'arbre est mal situé
 
