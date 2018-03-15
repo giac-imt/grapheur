@@ -20,3 +20,62 @@
 	<stdlib.h>
 	"lex.h"
 
+1509645919 source:c:\users\giac\codeblocks_programs\grapheur-lexique\lex.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"lex.h"
+
+1509015054 c:\users\giac\codeblocks_programs\grapheur-lexique\lex.h
+	"jeton.h"
+
+1509563901 source:c:\users\giac\codeblocks_programs\grapheur-lexique\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lex.h"
+
+1508853952 c:\users\giac\codeblocks_programs\grapheur-lexique\jeton.h
+
+1508496236 c:\users\giac\codeblocks_programs\grapheur-lexique\lex.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+
+1510667416 source:c:\users\giac\codeblocks_program\grapheur-lexique\lex.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"lex.h"
+
+1509015054 c:\users\giac\codeblocks_program\grapheur-lexique\lex.h
+	"jeton.h"
+
+1508853952 c:\users\giac\codeblocks_program\grapheur-lexique\jeton.h
+
+1510667222 source:c:\users\giac\codeblocks_program\grapheur-lexique\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"lex.h"
+
+1513342607 source:c:\users\giac\codeblocks_program\[proj]grapheur-lexique\lex.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"lex.h"
+
+1512461242 c:\users\giac\codeblocks_program\[proj]grapheur-lexique\lex.h
+	"jeton.h"
+
+1511538109 c:\users\giac\codeblocks_program\[proj]grapheur-lexique\jeton.h
+
+1513340661 source:c:\users\giac\codeblocks_program\[proj]grapheur-lexique\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"lex.h"
+

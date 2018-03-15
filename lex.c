@@ -70,7 +70,7 @@ void lex(char str[], typeToken t[]){
         }
 
         else if(((str[i]>='a') && (str[i]<='z')) || ((str[i]>='A') && (str[i]<='Z'))){
-            int ind = 0, k, l;
+            int ind = 0, k;
             char tmp[20] = {};
             while(isalpha(str[i])){
                 tmp[ind] = toupper(str[i]);
@@ -80,7 +80,7 @@ void lex(char str[], typeToken t[]){
             i--;
 
 
-            for(k = 0; k < 10; k++){
+            for(k = 0; k < 10; k++){ // verification des nom des fonctions
                 if(strcmp(functions[k], tmp) == 0){
                     t[j].lexem = FUNCT;
                     t[j].valor.funct = k;
@@ -148,3 +148,4 @@ void removeWhiteSpaces(char chaine[], char copy[]){
     }
     copy[j] == '\0';
 }
+

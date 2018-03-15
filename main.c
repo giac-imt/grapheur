@@ -1,16 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "lex.h"
-#include "jeton.h"
-
-#include "lex.c"
 
 int main(){
-    char str[20];
+    //Tableau de saisie
+    char str[20] = {'\0'};
+
+    //Tableau copie pour enlever les espaces
+    char cpy[20] = {'\0'};
+
+    //Tableau a transmettre
+    typeToken tab[20] = {};
+
+    //Saisie utilisateur & retrait des espaces
     gets(str);
-    /*typeToken tab[20];
-    int e;
-    e = lex(str, tab);*/
+
+    //Retrait des espaces
+    removeWhiteSpaces(str, cpy);
+
+    //Definition des lexems
+    lex(cpy, tab);
+
+    int i;
+
+    for(i = 0; i < 10; i++){
+        printf("%d\n", tab[i]);
+    }
+
     return 0;
 }
