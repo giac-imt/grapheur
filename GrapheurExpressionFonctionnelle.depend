@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1508495869 source:c:\users\toto\documents\github\grapheur\lex.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+
+1508493335 c:\users\toto\documents\github\grapheur\lex.h
+
+1508495675 c:\users\toto\documents\github\grapheur\jeton.h
+
+1508495747 source:c:\users\toto\documents\github\grapheur\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+	"jeton.h"
+	"lex.c"
+
+1508495869 c:\users\toto\documents\github\grapheur\lex.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+
