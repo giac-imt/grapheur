@@ -2,7 +2,7 @@
 #define LEXX_H_INCLUDED
 
 #include "jeton.h"
-//Transformation d'une chaine de caractère en tableau de lexem
+//Transformation d'une chaine de caractï¿½re en tableau de lexem
 void lex(char str[], typeToken t[]);
 
 //Retirer les espaces

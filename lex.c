@@ -148,4 +148,3 @@ void removeWhiteSpaces(char chaine[], char copy[]){
     }
     copy[j] == '\0';
 }
-

@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1508750967 source:c:\users\toto\documents\github\grapheur\eval.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"eval.h"
+
+1508750967 c:\users\toto\documents\github\grapheur\eval.h
+	"jeton.h"
+
+1508750967 c:\users\toto\documents\github\grapheur\jeton.h
+
+1508750967 source:c:\users\toto\documents\github\grapheur\lex.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+
+1508750967 c:\users\toto\documents\github\grapheur\lex.h
+
+1508750967 source:c:\users\toto\documents\github\grapheur\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+	"jeton.h"
+	"lex.c"
+
+1508750967 c:\users\toto\documents\github\grapheur\lex.c
+	<stdio.h>
+	<stdlib.h>
+	"lex.h"
+
